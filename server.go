@@ -22,6 +22,7 @@ func main() {
 
 	mux := bone.New()
 	mux.Get("/", http.HandlerFunc(homeHandler))
+	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(scenarioDetailedHandler))
 	n := negroni.Classic()
 	n.Use(negronilogrus.NewMiddleware())
 	n.UseHandler(mux)
