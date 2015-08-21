@@ -11,6 +11,24 @@ type Stubo struct {
 	host       string
 	port       string
 	protocol   string
+	uri        string
+}
+
+type scenarioDoc struct {
+	id   string `bson:"_id"`
+	name string `bson:"name"`
+}
+
+// Scenario object
+type Scenario struct {
+	name string
+	Stubo
+}
+
+func (s *Scenario) getStubs() ([]string, error) {
+	path := s.Stubo.uri + "/stubo/api/v2/scenarios/objects" + s.name + "/stubs"
+	fmt.Println(path)
+	return []string{"nope", "nope2"}, nil
 }
 
 // getScenariosDetail gets and returns all scenarios with details
