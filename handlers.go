@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/go-zoo/bone"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -14,7 +15,15 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	}).Info("Getting home view")
 
 	w.Header().Set("Content-Type", "application/json")
+	s := &Stubo{&http.Client{}, "localhost", "8001", "http"}
+	s.getScenariosDetail()
 	response := []byte("Hello!")
 	w.Write(response)
 
+}
+
+func scenarioDetailedHandler(w http.ResponseWriter, r *http.Request) {
+	id := bone.GetValue(r, "id")
+	scenario := bone.GetValue(r, "scenario")
+	w.Write([]byte("id:" + string(id) + ", scenario: " + scenario))
 }
