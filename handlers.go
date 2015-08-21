@@ -20,7 +20,11 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	w.Header().Set("Content-Type", "application/json")
-	s := &Stubo{&http.Client{}, "localhost", "8001", "http"}
+
+	// get stubo uri
+	uri := "http://localhost:8001"
+
+	s := &Stubo{&http.Client{}, "localhost", "8001", "http", uri}
 	s.getScenariosDetail()
 	// response := []byte("Hello!")
 	// w.Write(response)
