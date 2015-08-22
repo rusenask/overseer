@@ -65,4 +65,7 @@ func (s *Stubo) getScenariosDetail() ([]byte, error) {
 	fullPath := fmt.Sprintf("%s://%s:%s/%s", s.protocol, s.host, s.port, path)
 	fmt.Println(fullPath)
 	return []byte(""), nil
+func (d DBActions) dropTables() {
+	d.db.DropTable(&Stubo{})
+	d.db.DropTable(&Cluster{})
 }
