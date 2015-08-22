@@ -24,6 +24,15 @@ type Model struct {
 	UpdatedAt time.Time
 	DeletedAt *time.Time
 }
+// Stubo is a struct for keeping information about single stubo instance
+type Stubo struct {
+	gorm.Model
+	Name     string
+	Version  string
+	Hostname string
+	Port     string
+	Protocol string
+	Clusters []Cluster `gorm:"many2many:stubo_clusters;"` // Many-To-Many relationship, 'stubo_clusters' is join table
 }
 
 // Scenario object
