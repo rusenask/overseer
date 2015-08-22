@@ -1,0 +1,17 @@
+
+	{{range .Instances}}
+	<h3><a href="/{{ .ID }}">{{ .Name }}</a></h3>
+	<small>{{.CreatedAt}}</small>
+	<div>{{ .Hostname }}:{{ .Port}}</div>
+	{{end}}
+
+
+  <h2>Add new stubo instance</h2>
+  <form action="/stubos" method="POST">
+    <input type="text" name="Name" placeholder="stubo_x" /><br>
+    <input type="text" name="Version" placeholder="6.6" /><br>
+    <input type="text" name="Hostname" placeholder="localhost" /><br>
+    <input type="text" name="Port" placeholder="8001" /><br>
+    <input type="text" name="Protocol" placeholder="http" /><br>
+    <input type="submit" value="submit"/>
+  </form>
