@@ -50,6 +50,13 @@ func (s *Scenario) getStubs() ([]string, error) {
 	path := s.Stubo.uri + "/stubo/api/v2/scenarios/objects" + s.name + "/stubs"
 	fmt.Println(path)
 	return []string{"nope", "nope2"}, nil
+func (d DBActions) createTables() {
+	// creating Stubo table
+	d.db.CreateTable(&Stubo{})
+	d.db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Stubo{})
+	// creating Cluster table
+	d.db.CreateTable(&Cluster{})
+	d.db.Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&Cluster{})
 }
 
 // getScenariosDetail gets and returns all scenarios with details
