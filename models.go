@@ -39,6 +39,11 @@ type Stubo struct {
 type Scenario struct {
 	name string
 	Stubo
+// Cluster lets users to group stubo instances
+type Cluster struct {
+	gorm.Model
+	Name string `sql:"index:idx_name_code"`
+	Code string
 }
 
 func (s *Scenario) getStubs() ([]string, error) {
