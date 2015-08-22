@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/go-zoo/bone"
 	"github.com/jinzhu/gorm"
+	"github.com/mholt/binding"
 	"github.com/unrolled/render"
 )
 
@@ -35,13 +37,45 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *DBHandler) stuboShowHandler(rw http.ResponseWriter, req *http.Request) {
-	var stubos []Stubo
-	h.db.Find(&stubos)
-	if stubos == nil {
-		h.r.JSON(rw, http.StatusOK, "[]")
-	} else {
-		h.r.JSON(rw, http.StatusOK, &stubos)
+	// var stuboInstances []Stubo
+	var retData struct {
+		Instances []Stubo
 	}
+	h.db.Find(&retData.Instances)
+	fmt.Println(retData)
+	h.r.HTML(rw, http.StatusOK, "stubos", retData)
+	// if stbs == nil {
+	// 	h.r.HTML(rw, http.StatusOK, "stubos", &stbs)
+	// } else {
+	// 	h.r.HTML(rw, http.StatusOK, "stubos", &stbs)
+	// }
+}
+
+// stubosCreateHandler inserts a new guitar into the db.
+func (h *DBHandler) stubosCreateHandler(rw http.ResponseWriter, req *http.Request) {
+	h.stubosEdit(rw, req, 0)
+}
+
+// stubosEdit is shared between the create and update handler, since they share most of the logic.
+func (h *DBHandler) stubosEdit(rw http.ResponseWriter, req *http.Request, id uint) {
+	stuboForm := new(StuboForm)
+
+	log.WithFields(log.Fields{
+		"id":       id,
+		"url_path": req.URL.Path,
+	}).Info("Entering stubosEdti")
+
+	if err := binding.Bind(req, stuboForm); err.Handle(rw) {
+		return
+	}
+	stubo := Stubo{Name: stuboForm.Name, Version: stuboForm.Version, Hostname: stuboForm.Hostname,
+		Port: stuboForm.Port, Protocol: stuboForm.Protocol}
+	h.db.Create(&stubo)
+	log.WithFields(log.Fields{
+		"id":       id,
+		"url_path": req.URL.Path,
+	}).Info("Stubo added")
+	h.r.HTML(rw, http.StatusOK, "stubos", &stubo)
 }
 
 func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
