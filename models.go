@@ -17,6 +17,13 @@ type Stubo struct {
 type scenarioDoc struct {
 	id   string `bson:"_id"`
 	name string `bson:"name"`
+// Model provides a default model struct, you could embed it in your struct
+type Model struct {
+	ID        uint `gorm:"primary_key"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time
+}
 }
 
 // Scenario object
