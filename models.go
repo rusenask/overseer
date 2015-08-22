@@ -1,9 +1,11 @@
 package main
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/jinzhu/gorm"
+	"github.com/mholt/binding"
 )
 
 // DBActions struct for database actions - create, drop, migrate
@@ -27,7 +29,42 @@ type Stubo struct {
 	Hostname string
 	Port     string
 	Protocol string
-	Clusters []Cluster `gorm:"many2many:stubo_clusters;"` // Many-To-Many relationship, 'stubo_clusters' is join table
+	// Clusters []Cluster `gorm:"many2many:stubo_clusters;"` // Many-To-Many relationship, 'stubo_clusters' is join table
+}
+
+// StuboForm form values we need for updating/creating a stubo.
+type StuboForm struct {
+	Name     string
+	Version  string
+	Hostname string
+	Port     string
+	Protocol string
+}
+
+// FieldMap - to do some validation on our input fields. File is done separately.
+func (sf *StuboForm) FieldMap(req *http.Request) binding.FieldMap {
+	return binding.FieldMap{
+		&sf.Name: binding.Field{
+			Form:     "name",
+			Required: true,
+		},
+		&sf.Version: binding.Field{
+			Form:     "version",
+			Required: false,
+		},
+		&sf.Hostname: binding.Field{
+			Form:     "hostname",
+			Required: true,
+		},
+		&sf.Port: binding.Field{
+			Form:     "port",
+			Required: true,
+		},
+		&sf.Protocol: binding.Field{
+			Form:     "protocol",
+			Required: true,
+		},
+	}
 }
 
 // Cluster lets users to group stubo instances
