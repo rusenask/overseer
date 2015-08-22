@@ -8,23 +8,60 @@ import (
 	"github.com/codegangsta/negroni"
 	"github.com/go-zoo/bone"
 	"github.com/meatballhat/negroni-logrus"
+	"github.com/unrolled/render"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
 	// looking for option args when starting App
-	// like ./lgc -port=":3000" would start on port 3000
+	// like ./overeer -port=":3000" would start on port 3000
 	var port = flag.String("port", ":3000", "Server port")
+	var dbActions = flag.String("db", "", "Database actions - create, migrate, drop")
 	flag.Parse() // parse the flag
+
+	// init connection
+	db, err := gorm.Open("sqlite3", "gorm.db")
+	if err != nil {
+		log.WithFields(log.Fields{"error": err.Error()}).Fatal("Failed to open sqlite DB")
+	}
+	defer db.Close()
+	db.DB()
+	db.DB().Ping()
+	db.DB().SetMaxIdleConns(10)
+	db.DB().SetMaxOpenConns(100)
+
+	// flag to do something with the database
+	if *dbActions != "" {
+		log.WithFields(log.Fields{"action": dbActions}).Info("Database action initiated.")
+		d := DBActions{db: &db}
+
+		// create tables
+		if *dbActions == "create" {
+			d.createTables()
+		}
+		// drop tables
+		if *dbActions == "drop" {
+			d.dropTables()
+		}
+		return
+	}
+
+	r := render.New(render.Options{})
+	h := DBHandler{db: &db, r: r}
+
+	mux := bone.New()
+	mux.Get("/", http.HandlerFunc(homeHandler))
+	mux.Get("/stubos", http.HandlerFunc(h.stuboShowHandler))
+	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(h.scenarioDetailedHandler))
+	n := negroni.Classic()
+	n.Use(negronilogrus.NewMiddleware())
+	n.UseHandler(mux)
 
 	log.WithFields(log.Fields{
 		"port": port,
 	}).Info("Overseer is starting")
 
-	mux := bone.New()
-	mux.Get("/", http.HandlerFunc(homeHandler))
-	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(scenarioDetailedHandler))
-	n := negroni.Classic()
-	n.Use(negronilogrus.NewMiddleware())
-	n.UseHandler(mux)
 	n.Run(*port)
 }
