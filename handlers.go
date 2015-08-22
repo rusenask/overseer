@@ -5,8 +5,15 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/go-zoo/bone"
+	"github.com/jinzhu/gorm"
 	"github.com/unrolled/render"
 )
+
+// DBHandler used for passing database connection to handlers
+type DBHandler struct {
+	db *gorm.DB
+	r  *render.Render
+}
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// setting logger
@@ -21,20 +28,26 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
-	// get stubo uri
-	uri := "http://localhost:8001"
-
-	s := &Stubo{&http.Client{}, "localhost", "8001", "http", uri}
-	s.getScenariosDetail()
 	// response := []byte("Hello!")
 	// w.Write(response)
 	ren.HTML(w, http.StatusOK, "example", nil)
 
 }
 
-func scenarioDetailedHandler(w http.ResponseWriter, r *http.Request) {
+func (h *DBHandler) stuboShowHandler(rw http.ResponseWriter, req *http.Request) {
+	var stubos []Stubo
+	h.db.Find(&stubos)
+	if stubos == nil {
+		h.r.JSON(rw, http.StatusOK, "[]")
+	} else {
+		h.r.JSON(rw, http.StatusOK, &stubos)
+	}
+}
 
-	id := bone.GetValue(r, "id")
-	scenario := bone.GetValue(r, "scenario")
-	w.Write([]byte("id:" + string(id) + ", scenario: " + scenario))
+func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
+	// stubo ID, should be stored in database
+	id := bone.GetValue(req, "id")
+	scenario := bone.GetValue(req, "scenario")
+
+	rw.Write([]byte("id:" + string(id) + ", scenario: " + scenario))
 }
