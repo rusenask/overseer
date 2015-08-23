@@ -87,3 +87,11 @@ func (d DBActions) dropTables() {
 	d.db.DropTable(&Stubo{})
 	d.db.DropTable(&Cluster{})
 }
+
+// getAllInstances returns all instances of stubo
+func (h DBHandler) getAllInstances() []Stubo {
+	// var stuboInstances []Stubo
+	var stubos []Stubo
+	h.db.Find(&stubos)
+	return stubos
+}
