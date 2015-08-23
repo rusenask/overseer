@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/go-zoo/bone"
@@ -92,6 +93,26 @@ func (h *DBHandler) stuboDestroyHandler(rw http.ResponseWriter, req *http.Reques
 	}).Info("Stubo deleted")
 
 	h.r.JSON(rw, http.StatusOK, map[string]string{"data": "Stubo instance deleted!"})
+}
+
+func (h *DBHandler) stuboDetailedHandler(rw http.ResponseWriter, req *http.Request) {
+	id := bone.GetValue(req, "id")
+	u, err := strconv.ParseUint(id, 10, 64)
+	if err != nil {
+		http.Error(rw, "Bad stubo ID.", 400)
+	}
+	var stubo Stubo
+
+	stubo = h.getStuboDetails(u)
+	stuboURI := stubo.Protocol + "://" + stubo.Hostname + ":" + stubo.Port
+	client := &Client{&http.Client{}}
+	scenarios, err := client.getScenarios(stuboURI)
+	log.WithFields(log.Fields{
+		"id":             id,
+		"url_path":       req.URL.Path,
+		"scenario_count": len(scenarios),
+	}).Info("Stubo details fetched")
+
 }
 
 func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
