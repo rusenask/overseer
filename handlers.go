@@ -30,10 +30,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
-	// response := []byte("Hello!")
-	// w.Write(response)
 	ren.HTML(w, http.StatusOK, "example", nil)
-
 }
 
 func (h *DBHandler) stuboShowHandler(rw http.ResponseWriter, req *http.Request) {
