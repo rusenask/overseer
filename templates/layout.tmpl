@@ -72,5 +72,33 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   <script>
+       $(document).ready(function () {
+            $(".DeleteAction").click(function (event) {
+                var infoModal = $('#myModal');
+                href = event.target.id;
+
+
+                $.ajax({
+                    type: "DELETE",
+                    dataType: "json",
+                    url: href,
+                    success: function (data) {
+                        info_msg = JSON.stringify(data.data, null, 2);
+                        htmlData = '<ul><li>Message: ' + data.data + '</li></ul>';
+                        infoModal.find('.modal-body').html(htmlData);
+                        infoModal.modal('show');
+                        return false;
+                    }
+                });
+
+            });
+
+            $('#myModal').on('hidden.bs.modal', function () {
+                window.location.reload(true);
+            })
+        });
+   </script>
+
   </body>
 </html>
