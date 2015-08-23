@@ -43,7 +43,9 @@ func (h *DBHandler) stuboShowHandler(rw http.ResponseWriter, req *http.Request) 
 	}
 	h.db.Find(&retData.Instances)
 	fmt.Println(retData)
-	h.r.HTML(rw, http.StatusOK, "stubos", retData)
+
+	newmap := map[string]interface{}{"metatitle": "created post", "Instances": retData.Instances}
+	h.r.HTML(rw, http.StatusOK, "stubos", newmap)
 	// if stbs == nil {
 	// 	h.r.HTML(rw, http.StatusOK, "stubos", &stbs)
 	// } else {
