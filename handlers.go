@@ -59,17 +59,27 @@ func (h *DBHandler) stubosEdit(rw http.ResponseWriter, req *http.Request, id uin
 		"url_path": req.URL.Path,
 	}).Info("Entering stubosEdti")
 
+	// validate form
 	if err := binding.Bind(req, stuboForm); err.Handle(rw) {
+		fmt.Println(err.Error())
 		return
 	}
+	// assing form variables to stubo struct
 	stubo := Stubo{Name: stuboForm.Name, Version: stuboForm.Version, Hostname: stuboForm.Hostname,
 		Port: stuboForm.Port, Protocol: stuboForm.Protocol}
+
 	h.db.Create(&stubo)
 	log.WithFields(log.Fields{
 		"id":       id,
 		"url_path": req.URL.Path,
 	}).Info("Stubo added")
-	h.r.HTML(rw, http.StatusOK, "stubos", &stubo)
+	// getting all stubos
+	var stuboInstances []Stubo
+	stuboInstances = h.getAllInstances()
+
+	newmap := map[string]interface{}{"metatitle": "Stubo Instances", "Instances": stuboInstances}
+
+	h.r.HTML(rw, http.StatusOK, "stubos", newmap)
 }
 
 func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
