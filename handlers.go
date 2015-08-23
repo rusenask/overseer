@@ -113,6 +113,8 @@ func (h *DBHandler) stuboDetailedHandler(rw http.ResponseWriter, req *http.Reque
 		"scenario_count": len(scenarios),
 	}).Info("Stubo details fetched")
 
+	newmap := map[string]interface{}{"metatitle": "Stubo Details", "Scenarios": scenarios}
+	h.r.HTML(rw, http.StatusOK, "stuboDetails", newmap)
 }
 
 func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
