@@ -47,7 +47,6 @@ func main() {
 		}
 		return
 	}
-
 	r := render.New(render.Options{Layout: "layout"})
 	h := DBHandler{db: &db, r: r}
 
@@ -57,6 +56,8 @@ func main() {
 	mux.Get("/stubos", http.HandlerFunc(h.stuboShowHandler))
 	mux.Delete("/stubos/:id", http.HandlerFunc(h.stuboDestroyHandler))
 	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(h.scenarioDetailedHandler))
+	// handling static files
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	n := negroni.Classic()
 	n.Use(negronilogrus.NewMiddleware())
 	n.UseHandler(mux)
