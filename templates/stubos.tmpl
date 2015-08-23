@@ -12,7 +12,7 @@
                   <table class="table table-hover">
                     <tbody>
                         <tr>
-                          <th>#</th>
+                          <th>ID</th>
                           <th>Name</th>
                           <th>Hostname</th>
                           <th>Port</th>
@@ -23,7 +23,7 @@
                         {{range .Instances}}
                           <tr>
                             <td>{{.ID}} </td>
-                            <td>{{.Name}}</td>
+                            <td><a href="/stubos/{{.ID}}">{{.Name}}</a></td>
                             <td>{{.Hostname}}</td>
                             <td>{{.Port}}</td>
                             <td>{{.Protocol}}</td>
