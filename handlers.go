@@ -107,6 +107,9 @@ func (h *DBHandler) stuboDetailedHandler(rw http.ResponseWriter, req *http.Reque
 	stuboURI := stubo.Protocol + "://" + stubo.Hostname + ":" + stubo.Port
 	client := &Client{&http.Client{}}
 	scenarios, err := client.getScenarios(stuboURI)
+	if err != nil {
+		http.Error(rw, "Failed to get scenarios from Stubo!", 400)
+	}
 	log.WithFields(log.Fields{
 		"id":             id,
 		"url_path":       req.URL.Path,
