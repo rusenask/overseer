@@ -55,7 +55,7 @@ func main() {
 	mux.Get("/", http.HandlerFunc(homeHandler))
 	mux.Post("/stubos", http.HandlerFunc(h.stubosCreateHandler))
 	mux.Get("/stubos", http.HandlerFunc(h.stuboShowHandler))
-	mux.Delete("/stubos", http.HandlerFunc(h.stuboDestroyHandler))
+	mux.Delete("/stubos/:id", http.HandlerFunc(h.stuboDestroyHandler))
 	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(h.scenarioDetailedHandler))
 	n := negroni.Classic()
 	n.Use(negronilogrus.NewMiddleware())
