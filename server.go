@@ -48,7 +48,7 @@ func main() {
 		return
 	}
 
-	r := render.New(render.Options{})
+	r := render.New(render.Options{Layout: "layout"})
 	h := DBHandler{db: &db, r: r}
 
 	mux := bone.New()
