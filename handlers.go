@@ -37,20 +37,12 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *DBHandler) stuboShowHandler(rw http.ResponseWriter, req *http.Request) {
-	// var stuboInstances []Stubo
-	var retData struct {
-		Instances []Stubo
-	}
-	h.db.Find(&retData.Instances)
-	fmt.Println(retData)
+	var stuboInstances []Stubo
+	// Getting all stubo instances
+	stuboInstances = h.getAllInstances()
 
-	newmap := map[string]interface{}{"metatitle": "created post", "Instances": retData.Instances}
+	newmap := map[string]interface{}{"metatitle": "Stubo Instances", "Instances": stuboInstances}
 	h.r.HTML(rw, http.StatusOK, "stubos", newmap)
-	// if stbs == nil {
-	// 	h.r.HTML(rw, http.StatusOK, "stubos", &stbs)
-	// } else {
-	// 	h.r.HTML(rw, http.StatusOK, "stubos", &stbs)
-	// }
 }
 
 // stubosCreateHandler inserts a new guitar into the db.
