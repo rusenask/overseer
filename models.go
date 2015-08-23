@@ -45,23 +45,23 @@ type StuboForm struct {
 func (sf *StuboForm) FieldMap(req *http.Request) binding.FieldMap {
 	return binding.FieldMap{
 		&sf.Name: binding.Field{
-			Form:     "name",
+			Form:     "Name",
 			Required: true,
 		},
 		&sf.Version: binding.Field{
-			Form:     "version",
+			Form:     "Version",
 			Required: false,
 		},
 		&sf.Hostname: binding.Field{
-			Form:     "hostname",
+			Form:     "Hostname",
 			Required: true,
 		},
 		&sf.Port: binding.Field{
-			Form:     "port",
+			Form:     "Port",
 			Required: true,
 		},
 		&sf.Protocol: binding.Field{
-			Form:     "protocol",
+			Form:     "Protocol",
 			Required: true,
 		},
 	}
