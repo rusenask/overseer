@@ -86,8 +86,12 @@ func (h *DBHandler) stuboDestroyHandler(rw http.ResponseWriter, req *http.Reques
 	stubo := Stubo{}
 	h.db.Delete(&stubo, id)
 
-	// TODO: should add some messages to user about successful deletion
-	h.stuboShowHandler(rw, req)
+	log.WithFields(log.Fields{
+		"id":       id,
+		"url_path": req.URL.Path,
+	}).Info("Stubo deleted")
+
+	h.r.JSON(rw, http.StatusOK, map[string]string{"data": "Stubo instance deleted!"})
 }
 
 func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
