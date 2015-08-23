@@ -55,6 +55,7 @@ func main() {
 	mux.Post("/stubos", http.HandlerFunc(h.stubosCreateHandler))
 	mux.Get("/stubos", http.HandlerFunc(h.stuboShowHandler))
 	mux.Delete("/stubos/:id", http.HandlerFunc(h.stuboDestroyHandler))
+	mux.Get("/stubos/:id", http.HandlerFunc(h.stuboDetailedHandler))
 	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(h.scenarioDetailedHandler))
 	// handling static files
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
