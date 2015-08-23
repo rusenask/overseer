@@ -95,3 +95,10 @@ func (h DBHandler) getAllInstances() []Stubo {
 	h.db.Find(&stubos)
 	return stubos
 }
+
+// getStuboDetails returns matched stubo struct, supply ID
+func (h DBHandler) getStuboDetails(id uint64) Stubo {
+	var stubo Stubo
+	h.db.Where("ID = ?", id).First(&stubo)
+	return stubo
+}
