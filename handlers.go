@@ -41,6 +41,11 @@ func (h *DBHandler) stuboShowHandler(rw http.ResponseWriter, req *http.Request) 
 	// Getting all stubo instances
 	stuboInstances = h.getAllInstances()
 
+	// setting logger
+	log.WithFields(log.Fields{
+		"count": len(stuboInstances),
+	}).Info("Getting all Stubo instances")
+
 	newmap := map[string]interface{}{"metatitle": "Stubo Instances", "Instances": stuboInstances}
 	h.r.HTML(rw, http.StatusOK, "stubos", newmap)
 }
