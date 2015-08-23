@@ -73,11 +73,10 @@ func (h *DBHandler) stubosEdit(rw http.ResponseWriter, req *http.Request, id uin
 		"id":       id,
 		"url_path": req.URL.Path,
 	}).Info("Stubo added")
-	// getting all stubos
-	var stuboInstances []Stubo
-	stuboInstances = h.getAllInstances()
 
-	newmap := map[string]interface{}{"metatitle": "Stubo Instances", "Instances": stuboInstances}
+	// TODO: should add some messages to user about successful creation
+	h.stuboShowHandler(rw, req)
+}
 
 	h.r.HTML(rw, http.StatusOK, "stubos", newmap)
 }
