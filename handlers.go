@@ -78,7 +78,14 @@ func (h *DBHandler) stubosEdit(rw http.ResponseWriter, req *http.Request, id uin
 	h.stuboShowHandler(rw, req)
 }
 
-	h.r.HTML(rw, http.StatusOK, "stubos", newmap)
+// stuboDestroyHandler deletes a stubo instance from the db.
+func (h *DBHandler) stuboDestroyHandler(rw http.ResponseWriter, req *http.Request) {
+	id := bone.GetValue(req, "id")
+	stubo := Stubo{}
+	h.db.Delete(&stubo, id)
+
+	// TODO: should add some messages to user about successful deletion
+	h.stuboShowHandler(rw, req)
 }
 
 func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Request) {
