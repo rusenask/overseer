@@ -16,15 +16,19 @@
                          <thead>
                          <tr>
                              <th> Name </th>
-                             <th> Ref </th>
+                             <th> Recorded </th>
+                             <th> Stub count </th>
+                             <th> Size (KB) </th>
                              <th> Actions </th>
                          </tr>
                          </thead>
                          <tbody>
                              {{range .Scenarios}}
                                <tr>
-                                 <td>{{.Name}} </td>
-                                 <td><a href="{{.Ref}}">{{.Ref}}</a></td>
+                                 <td><a href="{{.Name}}">{{.Name}}</a></td>
+                                 <td>{{.Recorded}} </td>
+                                 <td>{{.StubCount}} </td>
+                                 <td>{{.SpaceUsed}} </td>
 
                                  <td>
                                      <!-- Single button -->
