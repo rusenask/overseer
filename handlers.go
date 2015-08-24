@@ -109,6 +109,7 @@ func (h *DBHandler) stuboDetailedHandler(rw http.ResponseWriter, req *http.Reque
 	scenarios, err := client.getScenarios(stuboURI)
 	if err != nil {
 		http.Error(rw, "Failed to get scenarios from Stubo!", 400)
+		return
 	}
 	log.WithFields(log.Fields{
 		"id":             id,
@@ -116,7 +117,7 @@ func (h *DBHandler) stuboDetailedHandler(rw http.ResponseWriter, req *http.Reque
 		"scenario_count": len(scenarios),
 	}).Info("Stubo details fetched")
 
-	newmap := map[string]interface{}{"metatitle": "Stubo Details", "Scenarios": scenarios}
+	newmap := map[string]interface{}{"metatitle": "Stubo Details", "Stubo": stubo, "Scenarios": scenarios}
 	h.r.HTML(rw, http.StatusOK, "stuboDetails", newmap)
 }
 
