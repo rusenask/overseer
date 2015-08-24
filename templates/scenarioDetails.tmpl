@@ -85,7 +85,6 @@
                          </tr>
                          </thead>
                          <tbody>
-                             {{ $id := .Stubo.ID }}
                              {{range .Scenario.Sessions}}
                                <tr>
                                  <td>{{.Name}}</td>
@@ -101,12 +100,12 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                               </button>
                                               <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Playback</a></li>
-                                                <li><a href="#">Record</a></li>
+                                                <li><a class="SessionPlay" id="{{.Name}}" href="#">Playback</a></li>
+                                                <li><a class="SessionRecord" id="{{.Name}}" href="#">Record</a></li>
                                               </ul>
                                          </div>
                                      {{ else }}
-                                         <button class="btn btn-danger btn-xs"> <i class="fa fa-fw fa-stop"></i> End Session</button>
+                                         <a class="SessionEnd btn btn-danger btn-xs" id="{{.Name}}" href="#"> <i class="fa fa-fw fa-stop"></i> End Session</a>
                                      {{ end }}
                                 </td>
                                </tr>
@@ -164,6 +163,7 @@ $(document).ready(function () {
          window.location.reload(true);
      })
  });
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
