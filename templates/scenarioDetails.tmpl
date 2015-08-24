@@ -126,6 +126,30 @@
 <script src="/static/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript">
 
+     function SessionExecute(body) {
+         var infoModal = $('#myModal');
+         href = "{{.Stubo.Protocol}}://{{.Stubo.Hostname}}:{{.Stubo.Port}}/stubo/api/v2/scenarios/objects/{{.Scenario.Name}}/action"
+
+         $.ajax({
+             type: "POST",
+             dataType: "json",
+             url: href,
+             data: JSON.stringify(body),
+             success: function (data) {
+                 info_msg = JSON.stringify(data.data, null, 2);
+                 htmlData = '<ul><li>Message: ' + data.data.message + '</li></ul>';
+                 infoModal.find('.modal-body').html(htmlData);
+                 infoModal.modal('show');
+                 return false;
+             }
+         });
+
+     };
+
+     $('#myModal').on('hidden.bs.modal', function () {
+         window.location.reload(true);
+     })
+ });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
