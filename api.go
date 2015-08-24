@@ -64,6 +64,33 @@ func (c *Client) getScenarios(uri string) ([]Scenario, error) {
 	return data.Data, nil
 }
 
+func (c *Client) getScenarioDetails(uri, scenario string) (Scenario, error) {
+	fullPath := uri + "/stubo/api/v2/scenarios/objects/" + scenario
+
+	// logging
+	log.WithFields(log.Fields{
+		"name":          scenario,
+		"urlPath":       fullPath,
+		"headers":       "",
+		"body":          "",
+		"requestMethod": "GET",
+	}).Debug("Getting scenario details")
+
+	respBody, err := c.GetResponseBody(fullPath)
+
+	if err != nil {
+		return Scenario{}, err
+	}
+
+	var data Scenario
+	err = json.Unmarshal(respBody, &data)
+
+	if err != nil {
+		return Scenario{}, err
+	}
+	return data, nil
+}
+
 // GetResponseBody calls stubo
 func (c *Client) GetResponseBody(uri string) ([]byte, error) {
 	// logging get Response body
