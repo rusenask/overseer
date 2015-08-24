@@ -23,9 +23,10 @@
                          </tr>
                          </thead>
                          <tbody>
+                             {{ $id := .Stubo.ID }}
                              {{range .Scenarios}}
                                <tr>
-                                 <td><a href="{{.Name}}">{{.Name}}</a></td>
+                                 <td><a href="/stubos/{{ $id }}/scenarios/{{.Name}}">{{.Name}}</a></td>
                                  <td>{{.Recorded}} </td>
                                  <td>{{.StubCount}} </td>
                                  <td>{{.SpaceUsed}} </td>
