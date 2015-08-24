@@ -39,7 +39,7 @@ type ScenarioResponse struct {
 
 // getScenarios gets and returns all scenarios with details
 func (c *Client) getScenarios(uri string) ([]Scenario, error) {
-	path := "/stubo/api/v2/scenarios"
+	path := "/stubo/api/v2/scenarios/detail"
 	fullPath := uri + path
 	log.WithFields(log.Fields{
 		"name":          "",
