@@ -173,7 +173,14 @@ $(document).ready(function () {
                  infoModal.modal('show');
                  return false;
              }
-         });
+         }).fail(function($xhr) {
+                var data = $xhr.responseJSON;
+                console.log(data);
+                htmlData = '<ul><li>Error: ' + data.error.message + '</li></ul>';
+                infoModal.find('.modal-body').html(htmlData);
+                infoModal.modal('show');
+                return false;
+            });
 
      };
 
