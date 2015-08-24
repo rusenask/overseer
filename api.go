@@ -46,7 +46,7 @@ func (c *Client) getScenarios(uri string) ([]Scenario, error) {
 		"urlPath":       path,
 		"headers":       "",
 		"body":          "",
-		"requestMethod": "",
+		"requestMethod": "GET",
 	}).Debug("Getting scenarios")
 	respBody, err := c.GetResponseBody(fullPath)
 
