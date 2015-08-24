@@ -13,10 +13,23 @@ type Client struct {
 	HTTPClient *http.Client
 }
 
-// Scenario structure for gettting scenario objects (not detailed)
+// Session stores session data (can be found in scenario details)
+type Session struct {
+	Status   string `json:"status"`
+	Loaded   string `json:"loaded"`
+	Name     string `json:"name"`
+	LastUsed string `json:"last_used"`
+}
+
+// Scenario structure for gettting scenario objects (not detailed). This struct
+// can be used for both scenario list and scenario detailed list
 type Scenario struct {
-	Name string `json:"name"`
-	Ref  string `json:"ScenarioRef"`
+	Name      string    `json:"name"`
+	Ref       string    `json:"ScenarioRef"`
+	SpaceUsed int       `json:"space_used_kb"`
+	Sessions  []Session `json:"sessions"`
+	Recorded  string    `json:"recorded"`
+	StubCount int       `json:"stub_count"`
 }
 
 // ScenarioResponse structure for unmarshaling JSON structures from API v2
