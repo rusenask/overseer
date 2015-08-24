@@ -100,11 +100,14 @@ func (h *DBHandler) stuboDetailedHandler(rw http.ResponseWriter, req *http.Reque
 	u, err := strconv.ParseUint(id, 10, 64)
 	if err != nil {
 		http.Error(rw, "Bad stubo ID.", 400)
+		return
 	}
 	var stubo Stubo
-
+	// getting stubo from database
 	stubo = h.getStuboDetails(u)
 	stuboURI := stubo.Protocol + "://" + stubo.Hostname + ":" + stubo.Port
+
+	// getting all scenarios
 	client := &Client{&http.Client{}}
 	scenarios, err := client.getScenarios(stuboURI)
 	if err != nil {
