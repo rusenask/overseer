@@ -126,6 +126,20 @@
 <script src="/static/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript">
 
+$(document).ready(function () {
+
+     $(".SessionPlay").click(function (event) {
+        session_name = event.target.id;
+         var requestBody = {
+            begin: null,
+            session: session_name,
+            mode: "playback"
+        }
+        SessionExecute(requestBody)
+     });
+
+
+
      function SessionExecute(body) {
          var infoModal = $('#myModal');
          href = "{{.Stubo.Protocol}}://{{.Stubo.Hostname}}:{{.Stubo.Port}}/stubo/api/v2/scenarios/objects/{{.Scenario.Name}}/action"
