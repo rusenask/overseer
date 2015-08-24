@@ -17,13 +17,13 @@
                       <tbody><tr>
                         <th>Parameter</th>
                         <th>Value</th>
-                        <th style="width: 40px">Action</th>
+                        <th>Action</th>
                       </tr>
                       <tr>
                         <td> Name </td>
                         <td>{{.Scenario.Name}}</td>
                         <td>
-                            <button class="btn btn-info btn-xs" style="width: 54px"> Rename</button>
+                            <button class="btn btn-info btn-xs"> Rename</button>
                         </td>
                       </tr>
 
@@ -39,7 +39,18 @@
                         <td> Stubs </td>
                         <td>{{.Scenario.StubCount}}</td>
                         <td>
-                            <button class="btn btn-info btn-xs" style="width: 54px"> Show </button>
+                            <div class="btn-group">
+                                 <button type="button" class="btn btn-xs btn-info">Actions</button>
+                                 <button type="button" class="btn btn-xs btn-info dropdown-toggle" data-toggle="dropdown">
+                                   <span class="caret"></span>
+                                   <span class="sr-only">Toggle Dropdown</span>
+                                 </button>
+                                 <ul class="dropdown-menu" role="menu">
+                                   <li><a href="#">Show</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="#">Delete</a></li>
+                                 </ul>
+                            </div>
                         </td>
                       </tr>
 
@@ -83,7 +94,7 @@
                                  <td>{{.LastUsed}} </td>
                                  <td>
                                      {{ if eq .Status "dormant" }}
-                                     <div class="btn-group">
+                                         <div class="btn-group">
                                               <button type="button" class="btn btn-xs btn-success">Begin</button>
                                               <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">
                                                 <span class="caret"></span>
@@ -93,7 +104,7 @@
                                                 <li><a href="#">Playback</a></li>
                                                 <li><a href="#">Record</a></li>
                                               </ul>
-                                            </div>
+                                         </div>
                                      {{ else }}
                                          <button class="btn btn-danger btn-xs"> <i class="fa fa-fw fa-stop"></i> End Session</button>
                                      {{ end }}
