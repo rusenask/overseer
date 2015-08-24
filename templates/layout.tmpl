@@ -95,33 +95,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
    <script src="/static/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
-   <script>
-       $(document).ready(function () {
-            $(".DeleteAction").click(function (event) {
-                var infoModal = $('#myModal');
-                href = event.target.id;
-
-
-                $.ajax({
-                    type: "DELETE",
-                    dataType: "json",
-                    url: href,
-                    success: function (data) {
-                        info_msg = JSON.stringify(data.data, null, 2);
-                        htmlData = '<ul><li>Message: ' + data.data + '</li></ul>';
-                        infoModal.find('.modal-body').html(htmlData);
-                        infoModal.modal('show');
-                        return false;
-                    }
-                });
-
-            });
-
-            $('#myModal').on('hidden.bs.modal', function () {
-                window.location.reload(true);
-            })
-        });
-   </script>
+   
 
   </body>
 </html>
