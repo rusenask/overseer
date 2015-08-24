@@ -2,10 +2,16 @@
 <div class="container" role="main" >
   <div class="row">
 
+      <section class="content-header">
+        <h1> Registered Stub-O-Matics </h1>
+      </section>
+
+      <section class="content">
+
       <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Stubo instances</h3>
+                  <h3 class="box-title"> Instances</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -60,7 +66,7 @@
                   <h3 class="box-title">Add new stubo instance</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" class="form-horizontal">
+                <form role="form" action="/stubos" method="POST" class="form-horizontal">
                   <div class="box-body">
                       <div class="form-group">
                         <label for="InputName" class="col-sm-2 control-label">Name</label>
@@ -104,5 +110,6 @@
                 </form>
               </div>
         </div>
+        </section>
   </div>
 </div>
