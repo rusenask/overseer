@@ -137,6 +137,16 @@ $(document).ready(function () {
         SessionExecute(requestBody)
      });
 
+     $(".SessionRecord").click(function (event) {
+        session_name = event.target.id;
+         var requestBody = {
+            begin: null,
+            session: session_name,
+            mode: "record"
+        }
+        SessionExecute(requestBody)
+     });
+
      $(".SessionEnd").click(function (event) {
         session_name = event.target.id;
          var requestBody = {
