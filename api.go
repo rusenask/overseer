@@ -37,6 +37,12 @@ type ScenarioResponse struct {
 	Data []Scenario `json:"data"`
 }
 
+// StuboResponse - JSON response from stubo API
+type StuboResponse struct {
+	Data    []Stub `json:"data"`
+	Version string `json:"version"`
+}
+
 // getScenarios gets and returns all scenarios with details
 func (c *Client) getScenarios(uri string) ([]Scenario, error) {
 	path := "/stubo/api/v2/scenarios/detail"
