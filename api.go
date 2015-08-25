@@ -37,6 +37,37 @@ type ScenarioResponse struct {
 	Data []Scenario `json:"data"`
 }
 
+// RequestContains is an array of strings tha define how stub should be matched
+type RequestContains struct {
+	Contains []string `json:"contains"`
+}
+
+// StubRequest stores information about request
+type StubRequest struct {
+	BodyPatterns RequestContains `json:"bodyPatterns"`
+	Method       string          `json:"method"`
+}
+
+// StubArgs stores information about arguments such as session
+type StubArgs struct {
+	Priority string `json:"priority"`
+	Session  string `json:"session"`
+}
+
+// ResponseFromStubo stores information about response that stubo should return
+type ResponseFromStubo struct {
+	StatusCode int      `json:"status"`
+	Body       []string `json:"body"`
+}
+
+// StubDetails stores information about the stub itself
+type StubDetails struct {
+	Priority int               `json:"priority"`
+	Request  StubRequest       `json:"request"`
+	Args     StubArgs          `json:"args"`
+	Response ResponseFromStubo `json:"response"`
+}
+
 // Stub - stub doc
 type Stub struct {
 	Stub      StubDetails `json:"stub"`
