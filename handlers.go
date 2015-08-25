@@ -150,3 +150,30 @@ func (h *DBHandler) scenarioDetailedHandler(rw http.ResponseWriter, req *http.Re
 	newmap := map[string]interface{}{"metatitle": "Scenario Details", "Stubo": stubo, "Scenario": scenario}
 	h.r.HTML(rw, http.StatusOK, "scenarioDetails", newmap)
 }
+
+func (h *DBHandler) scenarioStubsHandler(rw http.ResponseWriter, req *http.Request) {
+	// stubo ID, should be stored in database
+	id := bone.GetValue(req, "id")
+	u, err := strconv.ParseUint(id, 10, 64)
+	if err != nil {
+		http.Error(rw, "Bad stubo ID.", 400)
+		return
+	}
+	var stubo Stubo
+	// getting stubo from database
+	stubo = h.getStuboDetails(u)
+
+	// getting all scenarios
+	client := &Client{&http.Client{}}
+	scenarioName := bone.GetValue(req, "scenario")
+	stuboURI := stubo.Protocol + "://" + stubo.Hostname + ":" + stubo.Port
+
+	stubs, err := client.getScenarioStubs(stuboURI, scenarioName)
+	if err != nil {
+		http.Error(rw, "Failed to get scenario stubs from Stubo!", 400)
+		return
+	}
+
+	newmap := map[string]interface{}{"metatitle": "Scenario Stubs", "Scenario": scenarioName, "Stubo": stubo, "Stubs": stubs}
+	h.r.HTML(rw, http.StatusOK, "scenarioStubs", newmap)
+}
