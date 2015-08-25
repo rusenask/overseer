@@ -136,6 +136,33 @@ func (c *Client) getScenarioDetails(uri, scenario string) (Scenario, error) {
 	return data, nil
 }
 
+func (c *Client) getScenarioStubs(uri, scenario string) ([]Stub, error) {
+	fullPath := uri + "/stubo/api/v2/scenarios/objects/" + scenario + "/stubs"
+
+	// logging
+	log.WithFields(log.Fields{
+		"name":          scenario,
+		"urlPath":       fullPath,
+		"headers":       "",
+		"body":          "",
+		"requestMethod": "GET",
+	}).Debug("Getting scenario stubs")
+
+	respBody, err := c.GetResponseBody(fullPath)
+
+	if err != nil {
+		return []Stub{}, err
+	}
+
+	var data StuboResponse
+	err = json.Unmarshal(respBody, &data)
+
+	if err != nil {
+		return []Stub{}, err
+	}
+	return data.Data, nil
+}
+
 // GetResponseBody calls stubo
 func (c *Client) GetResponseBody(uri string) ([]byte, error) {
 	// logging get Response body
