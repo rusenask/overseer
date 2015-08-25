@@ -37,6 +37,14 @@ type ScenarioResponse struct {
 	Data []Scenario `json:"data"`
 }
 
+// Stub - stub doc
+type Stub struct {
+	Stub      StubDetails `json:"stub"`
+	SpaceUsed int         `json:"space_used"`
+	Recorded  string      `json:"recorded"`
+	Matcher   string      `json:"matchers_hash"`
+}
+
 // StuboResponse - JSON response from stubo API
 type StuboResponse struct {
 	Data    []Stub `json:"data"`
