@@ -57,6 +57,7 @@ func main() {
 	mux.Delete("/stubos/:id", http.HandlerFunc(h.stuboDestroyHandler))
 	mux.Get("/stubos/:id", http.HandlerFunc(h.stuboDetailedHandler))
 	mux.Get("/stubos/:id/scenarios/:scenario", http.HandlerFunc(h.scenarioDetailedHandler))
+	mux.Get("/stubos/:id/scenarios/:scenario/stubs", http.HandlerFunc(h.scenarioStubsHandler))
 	// handling static files
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	n := negroni.Classic()
