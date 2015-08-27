@@ -1,0 +1,26 @@
+package: main
+import:
+  - package: github.com/Sirupsen/logrus
+    repo:    https://github.com/Sirupsen/logrus
+    vcs:     git
+  - package: github.com/codegangsta/negroni
+    repo:    https://github.com/codegangsta/negroni
+    vcs:     git
+  - package: github.com/go-zoo/bone
+    repo:    https://github.com/go-zoo/bone
+    vcs:     git
+  - package: github.com/meatballhat/negroni-logrus
+    repo:    https://github.com/meatballhat/negroni-logrus
+    vcs:     git
+  - package: github.com/unrolled/render
+    repo:    https://github.com/unrolled/render
+    vcs:     git
+  - package: github.com/jinzhu/gorm
+    repo:    https://github.com/jinzhu/gorm
+    vcs:     git
+  - package: github.com/mattn/go-sqlite3
+    repo:    https://github.com/mattn/go-sqlite3
+    vcs:     git
+  - package: github.com/mholt/binding
+    repo:    https://github.com/mholt/binding
+    vcs:     git
